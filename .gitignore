@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+docker/db/data/*
+docker/db/work/*

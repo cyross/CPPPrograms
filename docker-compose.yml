@@ -1,0 +1,48 @@
+version: '3'
+services:
+    cpp:
+        build:
+            context: ./docker/cpp/
+        volumes:
+            - ./docker/cpp/src:/src
+        working_dir: /src
+        environment: 
+            TZ: Asia/Tokyo
+            DEBUG: cpp:*
+        ports:
+            - 8080:80
+            - 8000:8000
+            - 3000:3000
+        networks: 
+            - default
+        depends_on:
+            - db
+            - redis
+        tty: true
+    db:
+        image: mysql:8
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: test
+            MYSQL_PASSWORD: test
+            TZ: Asia/Tokyo
+        volumes:
+            - ./docker/db/init:/docker-entrypoint-initdb.d
+            - ./docker/db/data:/var/lib/mysql
+            - ./docker/db/conf/:/etc/mysql/conf.d
+            - ./docker/db/work:/work
+        ports: 
+            - "3306:3306"
+        networks:
+            - default
+        tty: true
+    redis:
+        image: redis:5
+        environment:
+            REDISPORT: 6379
+        volumes:
+            - ./docker/redis/work:/work
+            - ./docker/redis/redis:/etc/redis
+        ports:
+            - "6379:6379"
+        tty: true
