@@ -19,9 +19,13 @@ hello.cppをg++とclang++でビルドできるか確認用
 # よく使うコマンドまとめ
 
 ```
+# 通常時
 g++ -std=c++17 -Wall --pedantic-errors
 
---std=c++17 : 規格はC++17ベース
--Wall : 警告をすべて出す
---pedantic-erros : C++規格を厳格にチェック、規約違反のときはエラー
+# --std=c++17 : 規格はC++17ベース
+# -Wall : 警告をすべて出す
+# --pedantic-erros : C++規格を厳格にチェック、規約違反のときはエラー
+
+# テストスイート使用(gtest)時
+g++ -std=c++17 -Wall --pedantic-errors -lgtest_main -lgtest
 ```
